@@ -1,0 +1,40 @@
+
+def create_character(name, strength, intelligence, charisma):
+    if not isinstance(name, str):
+        return 'The character name should be a string'
+
+    if name == '':
+        return 'The character should have a name'
+
+    if len(name) > 10:
+        return 'The character name is too long'
+
+    if ' ' in name:
+        return 'The character name should not contain spaces'
+
+    stats = [strength, intelligence, charisma]
+    if not all(isinstance(s, int) for s in stats):
+        return 'All stats should be integers'
+
+    if not all(s >= 1 for s in stats):
+        return 'All stats should be no less than 1'
+
+    if not all(s <= 10 for s in stats):
+        return 'All stats should be no more than 10'
+
+    if sum(stats) != 25:
+        return 'The character should start with 25 points'
+
+    def stat_line(abbr, value):
+        full_dots = "●" * value
+        empty_dots = "○" * (10 - value)
+        return f"{abbr} {full_dots}{empty_dots}"
+
+    result = f"{name}\n"
+    result += stat_line("STR", strength) + "\n"
+    result += stat_line("INT", intelligence) + "\n"
+    result += stat_line("CHA", charisma)
+
+    return result
+
+print(create_character('Max:', 8, 7, 10))
